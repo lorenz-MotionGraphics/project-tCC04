@@ -1,4 +1,4 @@
-import tkinter as tk
+import customtkinter as ctk
 from tkinter import messagebox
 import sqlite3
 import hashlib
@@ -43,29 +43,25 @@ def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
 # ---------------------------- ADMIN CREDENTIALS ----------------------------
-ADMIN_EMAIL = "admin@example.com"
-ADMIN_PASSWORD = hash_password("admin123")
+ADMIN_ACCOUNTS = {
+    "kimberly-gajudo": hash_password("kimberly123"),
+    "ali-magtaca": hash_password("ali123"),
+    "gio-edds": hash_password("gio123"),
+    "nyl-mabini": hash_password("nyl123"),
+    "eonvhee": hash_password("eonvher123")
+}
 
 # ---------------------------- LOGIN WINDOW ----------------------------
 def open_login_window():
-    login_window = tk.Tk()
+    ctk.set_appearance_mode("Light")  # Options: "System", "Dark", "Light"
+    ctk.set_default_color_theme("blue")
+
+    login_window = ctk.CTk()
     login_window.title("Login")
-    login_window.geometry("400x400")
-    login_window.configure(bg="#f5f5f5")
+    login_window.geometry("400x500")
     login_window.resizable(False, False)
 
-    def style_label(text):
-        return tk.Label(login_window, text=text, font=("Helvetica", 12, "bold"), bg="#f5f5f5")
-
-    def style_entry():
-        return tk.Entry(login_window, width=30, font=("Helvetica", 11), bd=2, relief="groove")
-
-    def style_button(text, command, color="#4CAF50"):
-        return tk.Button(
-            login_window, text=text, width=20, command=command,
-            font=("Helvetica", 11, "bold"), bg=color, fg="white", bd=0, pady=8, activebackground="#45a049"
-        )
-
+    # ---------------------------- LOGIN FUNCTION ----------------------------
     def login():
         email = email_entry.get().strip()
         password = password_entry.get()
@@ -74,7 +70,7 @@ def open_login_window():
             messagebox.showwarning("Input Error", "Please fill in all fields.")
             return
 
-        if email == ADMIN_EMAIL and hash_password(password) == ADMIN_PASSWORD:
+        if email in ADMIN_ACCOUNTS and hash_password(password) == ADMIN_ACCOUNTS[email]:
             messagebox.showinfo("Success", "Welcome Admin!")
             login_window.destroy()
             open_admin_window()
@@ -93,19 +89,55 @@ def open_login_window():
         else:
             messagebox.showerror("Error", "Invalid email or password.")
 
-    tk.Label(login_window, text="Welcome! Please Login", font=("Helvetica", 16, "bold"), bg="#f5f5f5").pack(pady=20)
+    # ---------------------------- UI COMPONENTS ----------------------------
+    ctk.CTkLabel(
+        login_window,
+        text="A9EVENT\n Bringing Events to Life, One Click at a Time",
+        font=("Segoe UI", 18, "bold"),
+        justify="center"
+    ).pack(pady=30)
 
-    style_label("Email:").pack(pady=(10, 5))
-    email_entry = style_entry()
-    email_entry.pack()
+    email_entry = ctk.CTkEntry(
+        login_window,
+        width=280,
+        height=45,
+        corner_radius=15,
+        placeholder_text="Email"
+    )
+    email_entry.pack(pady=(10, 20))
 
-    style_label("Password:").pack(pady=(10, 5))
-    password_entry = style_entry()
-    password_entry.config(show='*')
-    password_entry.pack()
+    password_entry = ctk.CTkEntry(
+        login_window,
+        width=280,
+        height=45,
+        corner_radius=15,
+        placeholder_text="Password",
+        show="*"
+    )
+    password_entry.pack(pady=(10, 10))
 
-    style_button("Login", login).pack(pady=20)
-    style_button("Register", open_registration_window, color="#2196F3").pack()
+    # ---------------------------- BUTTONS ----------------------------
+    ctk.CTkButton(
+        login_window,
+        text="Login",
+        width=220,
+        height=45,
+        corner_radius=12,
+        command=login,
+        fg_color="#4CAF50",
+        hover_color="#45a049"
+    ).pack(pady=15)
+
+    ctk.CTkButton(
+        login_window,
+        text="Register",
+        width=220,
+        height=45,
+        corner_radius=12,
+        command=open_registration_window,
+        fg_color="#2196F3",
+        hover_color="#1976D2"
+    ).pack(pady=5)
 
     login_window.mainloop()
 
