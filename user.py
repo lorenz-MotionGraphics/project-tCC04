@@ -48,6 +48,7 @@ def connect_payments_db():
 # ✅ Payment form window
 def open_payment_window(booking):
     payment_window = tk.Toplevel()
+    set_icon(payment_window)
     payment_window.title("Payment Details")
     payment_window.geometry("400x320")
 
@@ -143,6 +144,7 @@ def update_booking(booking_id):
         return
 
     update_window = tk.Toplevel()
+    set_icon(update_window)
     update_window.title("Update Booking")
     update_window.geometry("400x400")
 

@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox, simpledialog
 import sqlite3
-
+from utils import set_icon
 # ---------------------------- DATABASE SETUP ----------------------------
 
 def connect_db(db_name, table_sql):
@@ -203,6 +203,7 @@ def open_admin_window():
     setup_databases()
 
     admin_window = tk.Tk()
+    set_icon(admin_window)
     admin_window.title("Admin Dashboard")
     admin_window.geometry("1000x750")
     admin_window.configure(bg="#f7f9fc")
