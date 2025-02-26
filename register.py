@@ -1,23 +1,27 @@
-import tkinter as tk
+import customtkinter as ctk
 from tkinter import messagebox
 import sqlite3
 import hashlib
+from main import open_login_window  # Ensure main.py has open_login_window function
+from utils import set_icon
 
+
+# ---------------------------- PASSWORD HASHING ----------------------------
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
+# ---------------------------- REGISTRATION WINDOW ----------------------------
 def open_registration_window():
-    reg_window = tk.Toplevel()
+    reg_window = ctk.CTkToplevel()
     reg_window.title("Register")
-    reg_window.geometry("450x500")
-    reg_window.configure(bg="#f5f5f5")
+    reg_window.geometry("450x550")
     reg_window.resizable(False, False)
 
-    def style_label(text):
-        return tk.Label(reg_window, text=text, font=("Helvetica", 12, "bold"), bg="#f5f5f5")
-
-    def style_entry():
-        return tk.Entry(reg_window, width=30, font=("Helvetica", 11), bd=2, relief="groove")
+    # ---------------------------- STYLES ----------------------------
+    def style_entry(placeholder):
+        entry = ctk.CTkEntry(reg_window, width=300, height=40, placeholder_text=placeholder, corner_radius=10)
+        entry.pack(pady=(5, 15))
+        return entry
 
     def register_user():
         first_name = first_name_entry.get().strip()
@@ -43,44 +47,37 @@ def open_registration_window():
                 VALUES (?, ?, ?, ?, ?)
             """, (first_name, last_name, email, phone, hash_password(password)))
             conn.commit()
-            messagebox.showinfo("Success", "Registration successful! You can now log in.")
+            messagebox.showinfo("Success", "Registration successful! Redirecting to login.")
             reg_window.destroy()
+            open_login_window()  # Open login window after registration success
         except sqlite3.IntegrityError:
             messagebox.showerror("Error", "Email already registered.")
         finally:
             conn.close()
 
-    tk.Label(reg_window, text="Register New Account", font=("Helvetica", 16, "bold"), bg="#f5f5f5").pack(pady=20)
+    # ---------------------------- UI SETUP ----------------------------
+    ctk.CTkLabel(reg_window, text="Register New Account", font=("Helvetica", 20, "bold")).pack(pady=20)
 
-    style_label("First Name:").pack(pady=(10, 5))
-    first_name_entry = style_entry()
-    first_name_entry.pack()
+    first_name_entry = style_entry("First Name")
+    last_name_entry = style_entry("Last Name")
+    email_entry = style_entry("Email")
+    phone_entry = style_entry("Phone")
+    password_entry = style_entry("Password")
+    password_entry.configure(show='*')
+    confirm_password_entry = style_entry("Confirm Password")
+    confirm_password_entry.configure(show='*')
 
-    style_label("Last Name:").pack(pady=(10, 5))
-    last_name_entry = style_entry()
-    last_name_entry.pack()
-
-    style_label("Email:").pack(pady=(10, 5))
-    email_entry = style_entry()
-    email_entry.pack()
-
-    style_label("Phone:").pack(pady=(10, 5))
-    phone_entry = style_entry()
-    phone_entry.pack()
-
-    style_label("Password:").pack(pady=(10, 5))
-    password_entry = style_entry()
-    password_entry.config(show='*')
-    password_entry.pack()
-
-    style_label("Confirm Password:").pack(pady=(10, 5))
-    confirm_password_entry = style_entry()
-    confirm_password_entry.config(show='*')
-    confirm_password_entry.pack()
-
-    tk.Button(
-        reg_window, text="Register", width=20, command=register_user,
-        font=("Helvetica", 11, "bold"), bg="#4CAF50", fg="white", bd=0, pady=8, activebackground="#45a049"
+    ctk.CTkButton(
+        reg_window, text="Register", width=200, height=40, corner_radius=10,
+        command=register_user, fg_color="#4CAF50", hover_color="#45a049"
     ).pack(pady=20)
 
-    reg_window.mainloop()
+# ---------------------------- TESTING ----------------------------
+if __name__ == "__main__":
+    ctk.set_appearance_mode("light")  # Modes: "System", "Dark", "Light"
+    ctk.set_default_color_theme("blue")
+
+    app = ctk.CTk()
+    app.withdraw()  # Hide main window during registration testing
+    open_registration_window()
+    app.mainloop()
