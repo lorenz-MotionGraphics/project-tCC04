@@ -3,7 +3,6 @@ from tkinter import messagebox
 import sqlite3
 import hashlib
 from main import open_login_window  # Ensure main.py has open_login_window function
-from utils import set_icon
 
 
 # ---------------------------- PASSWORD HASHING ----------------------------
@@ -16,6 +15,13 @@ def open_registration_window():
     reg_window.title("Register")
     reg_window.geometry("450x550")
     reg_window.resizable(False, False)
+
+    # Handle window close event
+    def on_close():
+        reg_window.destroy()
+        root.destroy()  # Ensure the entire application closes
+
+    reg_window.protocol("WM_DELETE_WINDOW", on_close)
 
     # ---------------------------- STYLES ----------------------------
     def style_entry(placeholder):
@@ -74,10 +80,10 @@ def open_registration_window():
 
 # ---------------------------- TESTING ----------------------------
 if __name__ == "__main__":
-    ctk.set_appearance_mode("light")  # Modes: "System", "Dark", "Light"
-    ctk.set_default_color_theme("blue")
+    ctk.set_appearance_mode("light")  # or "dark"
+    # ctk.deactivate_automatic_theme_update()  # ❌ Remove this line
 
-    app = ctk.CTk()
-    app.withdraw()  # Hide main window during registration testing
-    open_registration_window()
-    app.mainloop()
+    root = ctk.CTk()      # Create the main root window
+    root.withdraw()       # Hide the root window
+    open_registration_window()  # Open the registration window
+    root.mainloop()       # Keep the window open

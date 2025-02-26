@@ -2547,10 +2547,6 @@
   ('user',
    'C:\\Users\\USER\\Desktop\\desktop 24\\desktop 24.2\\project-tCC04\\user.py',
    'PYMODULE'),
-  ('utils',
-   'C:\\Users\\USER\\Desktop\\desktop 24\\desktop '
-   '24.2\\project-tCC04\\utils.py',
-   'PYMODULE'),
   ('uu',
    'C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\lib\\uu.py',
    'PYMODULE'),

@@ -6,7 +6,6 @@ from tkinter import messagebox, ttk, simpledialog
 from tkcalendar import DateEntry
 import sqlite3
 from datetime import datetime
-from utils import set_icon
 
 # ✅ Connect to events database and ensure table exists
 def connect_events_db():
@@ -48,7 +47,6 @@ def connect_payments_db():
 # ✅ Payment form window
 def open_payment_window(booking):
     payment_window = tk.Toplevel()
-    set_icon(payment_window)
     payment_window.title("Payment Details")
     payment_window.geometry("400x320")
 
@@ -144,7 +142,6 @@ def update_booking(booking_id):
         return
 
     update_window = tk.Toplevel()
-    set_icon(update_window)
     update_window.title("Update Booking")
     update_window.geometry("400x400")
 
@@ -227,7 +224,6 @@ def open_user_window():
     connect_payments_db()
 
     user_window = tk.Tk()
-    set_icon(user_window)
     user_window.title("User Dashboard")
     user_window.geometry("1000x650")
     user_window.configure(bg="#f4f6f9")  # Light background for modern look

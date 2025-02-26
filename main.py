@@ -2,7 +2,6 @@ import customtkinter as ctk
 from tkinter import messagebox
 import sqlite3
 import hashlib
-from utils import set_icon
 
 try:
     from admin import open_admin_window
@@ -58,7 +57,6 @@ def open_login_window():
     ctk.set_default_color_theme("blue")
 
     login_window = ctk.CTk()
-    set_icon(login_window)
     login_window.title("Login")
     login_window.geometry("400x500")
     login_window.resizable(False, False)
