@@ -92,3 +92,5 @@ project-tCC04/
 
 ## 🙌 **Conclusion:**  
 This project demonstrates a practical application of software development principles using Python. It successfully integrates a GUI, a relational database, and role-based functionalities, offering a solid foundation for event management systems.
+
+pip install customtkinter tkcalendar hashlib sqlite3
