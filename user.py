@@ -44,6 +44,19 @@ def connect_payments_db():
     conn.commit()
     conn.close()
 
+def get_logged_in_user():
+    conn = sqlite3.connect("users.db")
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT email FROM logged_in_user LIMIT 1")
+    user = cursor.fetchone()
+    
+    conn.close()
+    
+    if user:
+        return user[0]  # Return the logged-in email
+    return None
+    
 # ✅ Payment form window
 def open_payment_window(booking):
     payment_window = tk.Toplevel()
@@ -367,6 +380,7 @@ def book_event():
     location = location_entry.get().strip()
     capacity = capacity_entry.get().strip()
     organizer = organizer_entry.get().strip()
+    payment_status = "Pending"  # Default payment status
 
     if not all([fullname, event_name, start_date, end_date, location, capacity, organizer]):
         messagebox.showwarning("Input Error", "Please fill in all fields.")
@@ -378,20 +392,51 @@ def book_event():
         messagebox.showwarning("Input Error", "Capacity must be a number.")
         return
 
-    conn = sqlite3.connect('events.db')
-    cursor = conn.cursor()
-    cursor.execute("""
-        INSERT INTO bookings (fullname, event_name, start_date, end_date, location, capacity, organizer, payment_status)
-        VALUES (?, ?, ?, ?, ?, ?, ?, 'Pending')
-    """, (fullname, event_name, start_date, end_date, location, capacity_int, organizer))
-    conn.commit()
-    conn.close()
+    try:
+        conn = sqlite3.connect('events.db', timeout=10)
+        cursor = conn.cursor()
 
-    messagebox.showinfo("Success", "Event booked successfully!")
-    refresh_booking_table()
+        # 🚨 Check if the selected date range overlaps with any existing bookings
+        cursor.execute("""
+            SELECT id FROM bookings
+            WHERE (
+                (? BETWEEN start_date AND end_date) OR 
+                (? BETWEEN start_date AND end_date) OR 
+                (start_date BETWEEN ? AND ?) OR 
+                (end_date BETWEEN ? AND ?)
+            )
+        """, (start_date, end_date, start_date, end_date, start_date, end_date))
 
-    for entry in [fullname_entry, event_name_entry, location_entry, capacity_entry, organizer_entry]:
-        entry.delete(0, tk.END)
+        conflict = cursor.fetchone()  # Get the first conflicting entry (if any)
+
+        if conflict:
+            messagebox.showwarning(
+                "Conflict Detected", 
+                f"An event is already scheduled from {start_date} to {end_date}.\nPlease select a different date."
+            )
+            conn.close()
+            return  # Stop execution if there's a conflict
+
+        # 🚀 Insert the event since there's no conflict
+        cursor.execute("""
+            INSERT INTO bookings (fullname, event_name, start_date, end_date, location, capacity, organizer, payment_status)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """, (fullname, event_name, start_date, end_date, location, capacity_int, organizer, payment_status))
+
+        conn.commit()
+        messagebox.showinfo("Success", "Event booked successfully!")
+
+        refresh_booking_table()
+
+        # Clear input fields
+        for entry in [fullname_entry, event_name_entry, location_entry, capacity_entry, organizer_entry]:
+            entry.delete(0, tk.END)
+
+    except sqlite3.OperationalError as e:
+        messagebox.showerror("Database Error", f"Database error: {e}")
+    finally:
+        if conn:
+            conn.close()
 
 if __name__ == "__main__":
     open_user_window()
