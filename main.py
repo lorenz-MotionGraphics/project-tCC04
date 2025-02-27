@@ -2,6 +2,7 @@ import customtkinter as ctk
 from tkinter import messagebox
 import sqlite3
 import hashlib
+from PIL import Image
 
 try:
     from admin import open_admin_window
@@ -53,7 +54,7 @@ ADMIN_ACCOUNTS = {
 
 # ---------------------------- LOGIN WINDOW ----------------------------
 def open_login_window():
-    ctk.set_appearance_mode("Light")  # Options: "System", "Dark", "Light"
+    ctk.set_appearance_mode("Light")
     ctk.set_default_color_theme("blue")
 
     login_window = ctk.CTk()
@@ -90,12 +91,12 @@ def open_login_window():
             messagebox.showerror("Error", "Invalid email or password.")
 
     # ---------------------------- UI COMPONENTS ----------------------------
-    ctk.CTkLabel(
-        login_window,
-        text="A9EVENT\n Bringing Events to Life, One Click at a Time",
-        font=("Segoe UI", 18, "bold"),
-        justify="center"
-    ).pack(pady=30)
+    try:
+        logo_image = ctk.CTkImage(Image.open("logo.png"), size=(300, 100))
+        logo_label = ctk.CTkLabel(login_window, image=logo_image, text="")
+        logo_label.pack(pady=30)
+    except Exception as e:
+        messagebox.showerror("Image Error", f"Failed to load image: {e}")
 
     email_entry = ctk.CTkEntry(
         login_window,
@@ -134,7 +135,7 @@ def open_login_window():
         width=220,
         height=45,
         corner_radius=12,
-        command=open_registration_window,
+        command=lambda: open_registration_window(login_window),  # Pass login_window here
         fg_color="#2196F3",
         hover_color="#1976D2"
     ).pack(pady=5)
