@@ -16,6 +16,14 @@ project-tCC04/
 ├── admin.py       # Admin dashboard: (Handles admin-specific functions.)
 ├── users.db       # Database storing user credentials and details.
 ├── events.db      # Database storing event bookings.
+├── main.spec
+├── payments.db
+├── logo.png
+├── app_icon.png
+├── LICENSE.txt
+├── utils.py
+├── .gitignore
+├── event/
 └── __pycache__/   # Python cache files (auto-generated).
 ```
 
@@ -49,7 +57,7 @@ project-tCC04/
 - **Bookings Display:** Booked events are presented in a table format with a "Payment" button for future payment integration.
 - **Data Persistence:** Event bookings are saved in a separate `events.db` database for efficient data management.
 
-### 3️⃣ **Admin Dashboard (`admin.py`):** *(Planned/Partially Implemented)*
+### 3️⃣ **Admin Dashboard (`admin.py`):**
 - View all user bookings.
 - Manage user accounts and events.
 - Potential future features: editing or deleting bookings, user analytics.
@@ -80,16 +88,6 @@ project-tCC04/
 - **Documentation:** Well-commented code and structured documentation for future scalability and collaboration.  
 
 ---
-
-## 📅 **Future Enhancements:**  
-- Integrate a **payment gateway** for event booking payments.  
-- Develop **admin functionalities** for event and user management.  
-- Add **email notifications** upon successful booking.  
-- Enhance **input validation** (e.g., date pickers, numeric-only fields for capacity).  
-- Implement **user profile management** for viewing and updating user information.  
-
----
-
 ## 🙌 **Conclusion:**  
 This project demonstrates a practical application of software development principles using Python. It successfully integrates a GUI, a relational database, and role-based functionalities, offering a solid foundation for event management systems.
 
