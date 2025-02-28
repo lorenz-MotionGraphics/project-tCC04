@@ -22,8 +22,8 @@ project-tCC04/
 ---
 
 ## ⚙️ **Technologies Used**  
-- **Programming Language:** Python 3.10  
-- **GUI Framework:** Tkinter  
+- **Programming Language:** Python 3.13  
+- **GUI Framework:** Tkinter, Customtkinter
 - **Database:** SQLite3  
 
 ---
@@ -44,7 +44,7 @@ project-tCC04/
   - Start Date  
   - End Date  
   - Location  
-  - Capacity  
+  - No. Of Guest
   - Organizer  
 - **Bookings Display:** Booked events are presented in a table format with a "Payment" button for future payment integration.
 - **Data Persistence:** Event bookings are saved in a separate `events.db` database for efficient data management.
@@ -93,4 +93,7 @@ project-tCC04/
 ## 🙌 **Conclusion:**  
 This project demonstrates a practical application of software development principles using Python. It successfully integrates a GUI, a relational database, and role-based functionalities, offering a solid foundation for event management systems.
 
-pip install customtkinter tkcalendar hashlib sqlite3
+**Please Run This Code in the Previleged/Administrator Command Line:**
+```
+pip3 install customtkinter tkcalendar sqlite3
+```
