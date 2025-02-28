@@ -95,3 +95,14 @@ This project demonstrates a practical application of software development princi
 ```
 pip3 install customtkinter tkcalendar sqlite3
 ```
+
+---
+![Capture9](https://github.com/user-attachments/assets/491b521e-a787-4fc5-9a80-65f94017e1f9)
+![Capture8](https://github.com/user-attachments/assets/7b03a5a6-7c68-4b39-9c68-3b99480a0466)
+![Capture7](https://github.com/user-attachments/assets/c4a154ae-a90c-4769-b857-e5c5ddd83cb3)
+![Capture6](https://github.com/user-attachments/assets/7e67f439-21cb-4d40-9609-1e7c134a3252)
+![Capture5](https://github.com/user-attachments/assets/e37bf9de-c13d-4db4-813c-c7b4a41ec97d)
+![Capture4](https://github.com/user-attachments/assets/761cd16e-9f38-4a64-bc65-787d8bab203a)
+![Capture3](https://github.com/user-attachments/assets/9f6630ad-b22a-4d25-9a4e-fbeafccb3e87)
+![Capture2](https://github.com/user-attachments/assets/362c6157-60e5-471a-bb1b-c3ec953eee0a)
+![Capture](https://github.com/user-attachments/assets/c4653b2a-6dd4-45c9-9bd5-ca99bd1f1d45)
